@@ -1,5 +1,5 @@
 # FLUX Image Generation Docker - Gradio Service
-FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
+FROM nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
 
 LABEL maintainer="flux-serverless"
 LABEL description="FLUX Image Generation Service with Gradio UI"
@@ -56,8 +56,8 @@ RUN pip install --upgrade pip setuptools wheel
 # Create working directory
 WORKDIR /app
 
-# Install PyTorch with CUDA support
-RUN pip install --no-cache-dir torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 --index-url https://download.pytorch.org/whl/cu121
+# Install PyTorch with CUDA support (2.6.0+ required for CVE-2025-32434 fix)
+RUN pip install --no-cache-dir torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu124
 
 # Copy requirements and install dependencies
 COPY requirements.txt /app/requirements.txt
@@ -79,7 +79,7 @@ RUN pip install --no-cache-dir \
     omegaconf
 
 # Install xformers for memory efficiency
-RUN pip install --no-cache-dir xformers==0.0.24 || true
+RUN pip install --no-cache-dir xformers || true
 
 # Create cache directories
 RUN mkdir -p /home/caches && \
