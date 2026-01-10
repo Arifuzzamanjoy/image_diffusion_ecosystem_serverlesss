@@ -1,6 +1,6 @@
 # FLUX LoRA Trainer & Image Generator
 
-This project provides tools for training FLUX LoRA models and generating images with NSFW capabilities.
+This project provides tools for training FLUX LoRA models and generating images.
 
 ## 📋 Prerequisites
 
