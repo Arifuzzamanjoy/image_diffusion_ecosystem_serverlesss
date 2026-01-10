@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  flux-serverless:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flux-serverless
+    image: flux-serverless:latest
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - HF_TOKEN=${HF_TOKEN}  # Pass via environment variable
+      - HF_HOME=/runpod-volume/cache
+      - TRANSFORMERS_CACHE=/runpod-volume/cache
+      - HUGGINGFACE_HUB_CACHE=/runpod-volume/cache
+      - RUNPOD_DEBUG=true
+    volumes:
+      - ./cache:/runpod-volume/cache
+      - ./output:/app/output
+    ports:
+      - "8000:8000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+
+  # Test service for local development
+  flux-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    container_name: flux-test
+    image: flux-test:latest
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - HF_TOKEN=${HF_TOKEN}  # Pass via environment variable
+      - HF_HOME=/runpod-volume/cache
+      - TRANSFORMERS_CACHE=/runpod-volume/cache
+      - HUGGINGFACE_HUB_CACHE=/runpod-volume/cache
+    volumes:
+      - ./cache:/runpod-volume/cache
+      - ./output:/app/output
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    profiles:
+      - test

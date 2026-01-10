@@ -1,0 +1,16 @@
+# Requirements for RunPod Serverless FLUX Image Generation
+safetensors>=0.4.0
+diffusers>=0.25.0
+transformers>=4.36.0
+accelerate>=0.25.0
+huggingface_hub>=0.20.0
+peft>=0.7.0
+sentencepiece>=0.1.99
+protobuf>=4.25.0
+python-dotenv>=1.0.0
+Pillow>=10.0.0
+numpy>=1.24.0
+scipy>=1.11.0
+einops>=0.7.0
+omegaconf>=2.3.0
+invisible-watermark>=0.2.0

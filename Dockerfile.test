@@ -1,0 +1,70 @@
+# Test Dockerfile for local testing with HTTP endpoint
+FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
+
+LABEL maintainer="flux-serverless"
+LABEL description="Test FLUX Image Generation Endpoint"
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TORCH_CUDA_ARCH_LIST="7.5 8.0 8.6 8.9 9.0"
+ENV HF_HOME=/runpod-volume/cache
+ENV TRANSFORMERS_CACHE=/runpod-volume/cache
+ENV HUGGINGFACE_HUB_CACHE=/runpod-volume/cache
+ENV SAFETENSORS_CACHE_DIR=/runpod-volume/cache
+ENV PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+# HF_TOKEN should be passed at runtime via -e HF_TOKEN=your_token
+
+# Install system dependencies
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    git \
+    curl \
+    build-essential \
+    cmake \
+    wget \
+    python3.10 \
+    python3-pip \
+    python3-dev \
+    python3-setuptools \
+    python3-wheel \
+    python3-venv \
+    ffmpeg \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN ln -sf /usr/bin/python3 /usr/bin/python && \
+    ln -sf /usr/bin/pip3 /usr/bin/pip
+
+RUN pip install --upgrade pip setuptools wheel
+
+WORKDIR /app
+
+# Install PyTorch with CUDA support
+RUN pip install --no-cache-dir torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 --index-url https://download.pytorch.org/whl/cu121
+
+# Copy requirements and install
+COPY requirements_serverless.txt /app/requirements_serverless.txt
+RUN pip install --no-cache-dir -r requirements_serverless.txt
+
+# Install Flask for HTTP testing
+RUN pip install --no-cache-dir flask flask-cors requests
+
+# Install xformers
+RUN pip install --no-cache-dir xformers==0.0.24
+
+# Create cache directories
+RUN mkdir -p /runpod-volume/cache && \
+    chmod -R 777 /runpod-volume
+
+# Copy files
+COPY handler.py /app/handler.py
+COPY test_server.py /app/test_server.py
+
+WORKDIR /app
+
+EXPOSE 8080
+
+CMD ["python", "-u", "test_server.py"]
