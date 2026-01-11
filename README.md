@@ -73,11 +73,9 @@ Run the automated image generation pipeline:
 ./run_automation12.sh
 ```
 
-### 3. NSFW Image Generator
 Launch the NSFW-capable image generator:
 
-```bash
-./run_nsfw.sh
+```
 ```
 
 This includes automatic model downloading from Google Drive.
@@ -121,12 +119,11 @@ echo "y" | huggingface-cli login --token "$HF_token"
 ```bash
 # From project root, with venv activated
 python automation_12.py
-python nsfw.py
 ```
 
 ## 📊 Model Downloads
 
-The NSFW generator will automatically download required models:
+
 - **FLUX Transformer**: Downloaded from Google Drive (31FP16 version)
 - **Text Encoders**: Downloaded from Hugging Face
 - **VAE**: Downloaded from Hugging Face
