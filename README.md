@@ -73,9 +73,6 @@ Run the automated image generation pipeline:
 ./run_automation12.sh
 ```
 
-Launch the NSFW-capable image generator:
-
-```
 ```
 
 This includes automatic model downloading from Google Drive.
@@ -90,8 +87,7 @@ This includes automatic model downloading from Google Drive.
 ├── run_flux_ui.sh           # Training UI launcher
 ├── run_automation12.sh      # Automation script runner
 ├── run_nsfw.sh              # NSFW generator runner
-├── automation_12.py         # Automation pipeline
-├── nsfw.py                  # NSFW image generator
+├── automation_12.py         # Automation pi
 └── ai-toolkit/              # AI toolkit repository
     ├── venv/                # Python virtual environment
     ├── flux_train_ui.py     # Training UI
