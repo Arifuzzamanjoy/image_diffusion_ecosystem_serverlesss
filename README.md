@@ -118,7 +118,6 @@ python automation_12.py
 
 ## 📊 Model Downloads
 
-
 - **FLUX Transformer**: Downloaded from Google Drive (31FP16 version)
 - **Text Encoders**: Downloaded from Hugging Face
 - **VAE**: Downloaded from Hugging Face
@@ -161,7 +160,6 @@ HF_token=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 - Keep your Hugging Face token secure and never commit it to version control
 - Ensure you have sufficient disk space for model downloads (several GB)
-- The NSFW generator requires CUDA for optimal performance
 
 ## 📞 Support
 
