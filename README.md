@@ -86,7 +86,6 @@ This includes automatic model downloading from Google Drive.
 ├── install_ai_toolkit.sh     # Installation script
 ├── run_flux_ui.sh           # Training UI launcher
 ├── run_automation12.sh      # Automation script runner
-├── run_nsfw.sh              # NSFW generator runner
 ├── automation_12.py         # Automation pi
 └── ai-toolkit/              # AI toolkit repository
     ├── venv/                # Python virtual environment
