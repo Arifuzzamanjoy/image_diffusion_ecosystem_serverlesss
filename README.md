@@ -2,6 +2,9 @@
 
 This project provides tools for training FLUX LoRA models and generating images.
 
+For full overview please checkout of the video
+https://vimeo.com/manage/videos/1160307028
+
 ## 📋 Prerequisites
 
 - Python 3.8+
